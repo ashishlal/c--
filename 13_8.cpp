@@ -2,49 +2,51 @@
 #include <vector>
 
 using namespace std;
-template <class T, class U>
+template <typename T, typename U>
 class Assoc {
+    template<typename A, typename B>
     struct Pair {
-        T key;
-        U val;
-        Pair(T &k, U &u): key(k), val(u) {}
+        A key;
+        B val;
+        Pair(A &k, B &u): key(k), val(u) {}
+        Pair(const A &k, const B &u): key(k), val(u) {}
     };
-    vector<Pair> vec;
+    vector<Pair<T, U> > vec;
     Assoc(const Assoc &) {} ;  // copy constructor
     Assoc & operator=(const Assoc &) {}; // assignment operator
     public:
         Assoc() {}
         const U& operator[] (const T &t)
         {
-            for(vector<Pair>::iterator p=vec.begin(); p != vec.end(); p++)
+            for(typename vector<Pair<T, U> >::iterator p=vec.begin(); p != vec.end(); p++)
             {
                 if(t == p->key) return p->val;
                 return vec.back().val;
             }
         }
-        void add(T &t, U & val)
+        void add(const T &t, const U & val)
         {
-            for(vector<Pair>::iterator p=vec.begin(); p != vec.end(); p++)
+            for(typename vector<Pair<T, U> >::iterator p=vec.begin(); p != vec.end(); p++)
             {
-                if(t == p->key) return;
-                vec.push_back(Pair(t, val));
+                if(const_cast<T &>(t) == p->key) return;
             }
+            vec.push_back(Pair<T, U> (t, val));
         }
-        void erase(T &t)
+        void erase(const T &t)
         {
-            for(vector<Pair>::iterator p=vec.begin(); p != vec.end(); p++)
+            for(typename vector<Pair<T, U> >::iterator p=vec.begin(); p != vec.end(); p++)
             {
-                if(s == p->key) {
+                if(const_cast<T &>(t) == p->key) {
                     vec.erase(p);
                     return;
                 }
             }
         }
-        U & find(T & key)
+        U & find(const T & key) 
         {
-            for(vector<Pair>::iterator p=vec.begin(); p != vec.end(); p++)
+            for(typename vector<Pair<T, U> >::iterator p=vec.begin(); p != vec.end(); p++)
             {
-                if(s == p->key) {
+                if(const_cast<T &>(key) == p->key) {
                     return p->val;
                 }
             }
@@ -52,28 +54,29 @@ class Assoc {
         }
         void print_all() const
         {
-            for(vector<Pair>::iterator p=vec.begin(); p != vec.end(); p++)
+            for(typename vector<Pair<T, U> >::iterator p=vec.begin(); p != vec.end(); p++)
             {
                 //std::cout << p->name << ": " << p->val << std::endl;
             }
         }
     };
 
-template<typename T, typename U>
+template<typename X, typename Y>
 class Map {
-    Assoc<T, U> vec;
+    Assoc<X, Y> vec;
 public:
-    Map(): {};
-    void insert(const T &t, const U &u)
+    Map() {};
+    void insert(const X &t, const Y &u)
     {
         vec.add(t, u);
     }
-    void erase(const T & key)
+    void erase(const X & key)
     {
         vec.erase(key);
     }
-    const U & find(const T & t)
+    Y & find(const X & t) 
     {
+        return vec.find(t);
     }
 };
 
@@ -82,18 +85,20 @@ public:
     string s;
     A() {};
     A(string &str): s(str) {};
-    string & operator() { return s; }
-    bool operator== (const A &a) { if(a.s == s)  return true; return false;}
+    A(const char *str): s(string(str)) {};
+    operator string() { return s; }
+    bool operator== (A &a) { if(a.s == s)  return true; return false;}
 };
 
 class B {
 public:
     double val;
     B() {};
-    B(double &v): v(val) {};
-    double & operator() { return val; };
-    bool operator== (const B &b) { if(b.val == val)  return true; return false;}
-}
+    B(double &v): val(v) {};
+    B(double v): val(v) {};
+    operator double() { return val; };
+    bool operator== (B &b) { if(b.val == val)  return true; return false;}
+};
 
 int main()
 {
@@ -102,4 +107,10 @@ int main()
     Map<A, B> m;
     m.insert(a, b);
     cout << m.find(a) << endl;
+    m.erase(a);
+    A a1("hello world");
+    m.insert(a1, b);
+    m.insert("world", b);
+    cout << m.find(a1) << endl;
+    cout << m.find("world") << endl;
 }
