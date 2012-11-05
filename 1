@@ -1,0 +1,106 @@
+Script started on Fri 02 Nov 2012 10:12:21 AM JST
+]0;ashish@ashishpc: ~/test/c--ashish@ashishpc:~/test/c--$ exitg++ 13_8.cpp -o 13_8
+13_8.cpp: In member function ‘const U& Assoc<T, U>::operator[](const T&)’:
+13_8.cpp:19:17: error: need ‘typename’ before ‘std::vector<Assoc<T, U>::Pair>::iterator’ because ‘std::vector<Assoc<T, U>::Pair>’ is a dependent scope
+13_8.cpp:19:40: error: expected ‘;’ before ‘p’
+13_8.cpp:19:55: error: ‘p’ was not declared in this scope
+13_8.cpp: In member function ‘void Assoc<T, U>::add(T&, U&)’:
+13_8.cpp:27:17: error: need ‘typename’ before ‘std::vector<Assoc<T, U>::Pair>::iterator’ because ‘std::vector<Assoc<T, U>::Pair>’ is a dependent scope
+13_8.cpp:27:40: error: expected ‘;’ before ‘p’
+13_8.cpp:27:55: error: ‘p’ was not declared in this scope
+13_8.cpp: In member function ‘void Assoc<T, U>::erase(T&)’:
+13_8.cpp:35:17: error: need ‘typename’ before ‘std::vector<Assoc<T, U>::Pair>::iterator’ because ‘std::vector<Assoc<T, U>::Pair>’ is a dependent scope
+13_8.cpp:35:40: error: expected ‘;’ before ‘p’
+13_8.cpp:35:55: error: ‘p’ was not declared in this scope
+13_8.cpp:37:20: error: ‘s’ was not declared in this scope
+13_8.cpp: In member function ‘U& Assoc<T, U>::find(T&)’:
+13_8.cpp:45:17: error: need ‘typename’ before ‘std::vector<Assoc<T, U>::Pair>::iterator’ because ‘std::vector<Assoc<T, U>::Pair>’ is a dependent scope
+13_8.cpp:45:40: error: expected ‘;’ before ‘p’
+13_8.cpp:45:55: error: ‘p’ was not declared in this scope
+13_8.cpp:47:20: error: ‘s’ was not declared in this scope
+13_8.cpp: In member function ‘void Assoc<T, U>::print_all() const’:
+13_8.cpp:55:17: error: need ‘typename’ before ‘std::vector<Assoc<T, U>::Pair>::iterator’ because ‘std::vector<Assoc<T, U>::Pair>’ is a dependent scope
+13_8.cpp:55:40: error: expected ‘;’ before ‘p’
+13_8.cpp:55:55: error: ‘p’ was not declared in this scope
+13_8.cpp: In constructor ‘Map<T, U>::Map()’:
+13_8.cpp:66:12: error: expected identifier before ‘{’ token
+13_8.cpp: At global scope:
+13_8.cpp:85:23: error: function definition does not declare parameters
+13_8.cpp:94:23: error: function definition does not declare parameters
+13_8.cpp:96:1: error: expected ‘;’ after class definition
+13_8.cpp: In constructor ‘B::B(double&)’:
+13_8.cpp:93:19: error: class ‘B’ does not have any field named ‘v’
+13_8.cpp: In function ‘int main()’:
+13_8.cpp:100:16: error: no matching function for call to ‘A::A(const char [6])’
+13_8.cpp:100:16: note: candidates are:
+13_8.cpp:84:5: note: A::A(std::string&)
+13_8.cpp:84:5: note:   no known conversion for argument 1 from ‘const char [6]’ to ‘std::string& {aka std::basic_string<char>&}’
+13_8.cpp:83:5: note: A::A()
+13_8.cpp:83:5: note:   candidate expects 0 arguments, 1 provided
+13_8.cpp:80:7: note: A::A(const A&)
+13_8.cpp:80:7: note:   no known conversion for argument 1 from ‘const char [6]’ to ‘const A&’
+13_8.cpp:101:16: error: no matching function for call to ‘B::B(double)’
+13_8.cpp:101:16: note: candidates are:
+13_8.cpp:93:5: note: B::B(double&)
+13_8.cpp:93:5: note:   no known conversion for argument 1 from ‘double’ to ‘double&’
+13_8.cpp:92:5: note: B::B()
+13_8.cpp:92:5: note:   candidate expects 0 arguments, 1 provided
+13_8.cpp:89:7: note: B::B(const B&)
+13_8.cpp:89:7: note:   no known conversion for argument 1 from ‘double’ to ‘const B&’
+13_8.cpp:104:21: error: no match for ‘operator<<’ in ‘std::cout << m.Map<T, U>::find [with T = A, U = B]((*(const A*)(& a)))’
+13_8.cpp:104:21: note: candidates are:
+/usr/include/c++/4.6/ostream:110:7: note: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__ostream_type& (*)(std::basic_ostream<_CharT, _Traits>::__ostream_type&)) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+/usr/include/c++/4.6/ostream:110:7: note:   no known conversion for argument 1 from ‘const B’ to ‘std::basic_ostream<char>::__ostream_type& (*)(std::basic_ostream<char>::__ostream_type&) {aka std::basic_ostream<char>& (*)(std::basic_ostream<char>&)}’
+/usr/include/c++/4.6/ostream:119:7: note: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__ios_type& (*)(std::basic_ostream<_CharT, _Traits>::__ios_type&)) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>, std::basic_ostream<_CharT, _Traits>::__ios_type = std::basic_ios<char>]
+/usr/include/c++/4.6/ostream:119:7: note:   no known conversion for argument 1 from ‘const B’ to ‘std::basic_ostream<char>::__ios_type& (*)(std::basic_ostream<char>::__ios_type&) {aka std::basic_ios<char>& (*)(std::basic_ios<char>&)}’
+/usr/include/c++/4.6/ostream:129:7: note: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(std::ios_base& (*)(std::ios_base&)) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+/usr/include/c++/4.6/ostream:129:7: note:   no known conversion for argument 1 from ‘const B’ to ‘std::ios_base& (*)(std::ios_base&)’
+/usr/include/c++/4.6/ostream:167:7: note: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long int) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+/usr/include/c++/4.6/ostream:167:7: note:   no known conversion for argument 1 from ‘const B’ to ‘long int’
+/usr/include/c++/4.6/ostream:171:7: note: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long unsigned int) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+/usr/include/c++/4.6/ostream:171:7: note:   no known conversion for argument 1 from ‘const B’ to ‘long unsigned int’
+/usr/include/c++/4.6/ostream:175:7: note: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(bool) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+/usr/include/c++/4.6/ostream:175:7: note:   no known conversion for argument 1 from ‘const B’ to ‘bool’
+/usr/include/c++/4.6/bits/ostream.tcc:93:5: note: std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(short int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/include/c++/4.6/bits/ostream.tcc:93:5: note:   no known conversion for argument 1 from ‘const B’ to ‘short int’
+/usr/include/c++/4.6/ostream:182:7: note: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(short unsigned int) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+/usr/include/c++/4.6/ostream:182:7: note:   no known conversion for argument 1 from ‘const B’ to ‘short unsigned int’
+/usr/include/c++/4.6/bits/ostream.tcc:107:5: note: std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(int) [with _CharT = char, _Traits = std::char_traits<char>]
+/usr/include/c++/4.6/bits/ostream.tcc:107:5: note:   no known conversion for argument 1 from ‘const B’ to ‘int’
+/usr/include/c++/4.6/ostream:193:7: note: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(unsigned int) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+/usr/include/c++/4.6/ostream:193:7: note:   no known conversion for argument 1 from ‘const B’ to ‘unsigned int’
+/usr/include/c++/4.6/ostream:202:7: note: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long long int) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+/usr/include/c++/4.6/ostream:202:7: note:   no known conversion for argument 1 from ‘const B’ to ‘long long int’
+/usr/include/c++/4.6/ostream:206:7: note: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long long unsigned int) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+/usr/include/c++/4.6/ostream:206:7: note:   no known conversion for argument 1 from ‘const B’ to ‘long long unsigned int’
+/usr/include/c++/4.6/ostream:211:7: note: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(double) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+/usr/include/c++/4.6/ostream:211:7: note:   no known conversion for argument 1 from ‘const B’ to ‘double’
+/usr/include/c++/4.6/ostream:215:7: note: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(float) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+/usr/include/c++/4.6/ostream:215:7: note:   no known conversion for argument 1 from ‘const B’ to ‘float’
+/usr/include/c++/4.6/ostream:223:7: note: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(long double) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+/usr/include/c++/4.6/ostream:223:7: note:   no known conversion for argument 1 from ‘const B’ to ‘long double’
+/usr/include/c++/4.6/ostream:227:7: note: std::basic_ostream<_CharT, _Traits>::__ostream_type& std::basic_ostream<_CharT, _Traits>::operator<<(const void*) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__ostream_type = std::basic_ostream<char>]
+/usr/include/c++/4.6/ostream:227:7: note:   no known conversion for argument 1 from ‘const B’ to ‘const void*’
+/usr/include/c++/4.6/bits/ostream.tcc:121:5: note: std::basic_ostream<_CharT, _Traits>& std::basic_ostream<_CharT, _Traits>::operator<<(std::basic_ostream<_CharT, _Traits>::__streambuf_type*) [with _CharT = char, _Traits = std::char_traits<char>, std::basic_ostream<_CharT, _Traits>::__streambuf_type = std::basic_streambuf<char>]
+/usr/include/c++/4.6/bits/ostream.tcc:121:5: note:   no known conversion for argument 1 from ‘const B’ to ‘std::basic_ostream<char>::__streambuf_type* {aka std::basic_streambuf<char>*}’
+/usr/include/c++/4.6/bits/basic_string.h:2693:5: note: template<class _CharT, class _Traits, class _Alloc> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const std::basic_string<_CharT, _Traits, _Alloc>&)
+/usr/include/c++/4.6/ostream:451:5: note: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, _CharT)
+/usr/include/c++/4.6/ostream:456:5: note: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, char)
+/usr/include/c++/4.6/ostream:462:5: note: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, char)
+/usr/include/c++/4.6/ostream:468:5: note: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, signed char)
+/usr/include/c++/4.6/ostream:473:5: note: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, unsigned char)
+/usr/include/c++/4.6/ostream:493:5: note: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const _CharT*)
+/usr/include/c++/4.6/bits/ostream.tcc:323:5: note: template<class _CharT, class _Traits> std::basic_ostream<_CharT, _Traits>& std::operator<<(std::basic_ostream<_CharT, _Traits>&, const char*)
+/usr/include/c++/4.6/ostream:510:5: note: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const char*)
+/usr/include/c++/4.6/ostream:523:5: note: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const signed char*)
+/usr/include/c++/4.6/ostream:528:5: note: template<class _Traits> std::basic_ostream<char, _Traits>& std::operator<<(std::basic_ostream<char, _Traits>&, const unsigned char*)
+13_8.cpp: In member function ‘void Map<T, U>::insert(const T&, const U&) [with T = A, U = B]’:
+13_8.cpp:103:18:   instantiated from here
+13_8.cpp:69:9: error: no matching function for call to ‘Assoc<A, B>::add(const A&, const B&)’
+13_8.cpp:69:9: note: candidate is:
+13_8.cpp:25:14: note: void Assoc<T, U>::add(T&, U&) [with T = A, U = B]
+13_8.cpp:25:14: note:   no known conversion for argument 1 from ‘const A’ to ‘A&’
+]0;ashish@ashishpc: ~/test/c--ashish@ashishpc:~/test/c--$ exit
+exit
+
+Script done on Fri 02 Nov 2012 10:12:44 AM JST
