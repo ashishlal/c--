@@ -1,0 +1,147 @@
+#ifndef _IFS_AGENT_HPP_
+#define _IFS_AGENT_HPP_
+
+#include "IfsMibModule.hpp"
+
+enum ATPDeviceTypes {
+    ATP_DEV_MIXER=1,
+    ATP_DEV_TURRET,
+    ATP_DEV_GATEWAY
+};
+
+#define AGENT_COMMON_STATS_SET(param) \
+    virtual void set_##param(string & s) \
+    { \
+        if(ifsMixerMib) ifsMixerMib->set_##param(s); \
+	else if(ifsTurretMib) ifsTurretMib->set##param(s); \
+	else if(ifsGwMib) ifsGwMib->set##param(s); \
+    };
+
+#define AGENT_COMMON_STATS_GET(param) \
+    virtual string& get_##param() \
+    { \
+        if(ifsMixerMib) ifsMixerMib->get_##param(); \
+	else if(ifsTurretMib) ifsTurretMib->get##param(); \
+	else if(ifsGwMib) ifsGwMib->get##param(); \
+    };
+
+#define AGENT_MIXER_STATS_SET(param) \
+    virtual void set_##param(string & s) \
+    { \
+        if(ifsMixerMib)  ifsMixerMib->set_##param(s); \
+    };
+
+#define AGENT_MIXER_STATS_GET(param) \
+    virtual string& get_##param() \
+    { \
+        if(ifsMixerMib)  ifsMixerMib->get_##param(); \
+    };
+
+#define AGENT_TURRET_STATS_SET(param) \
+    virtual void set_##param(string & s) \
+    { \
+        if(ifsTurretMib)  ifsTurretMib->set_##param(s); \
+    };
+
+#define AGENT_TURRET_STATS_GET(param) \
+    virtual string& get_##param() \
+    { \
+        if(ifsTurretMib)  ifsTurretMib->get_##param(); \
+    };
+
+#define AGENT_GATEWAY_STATS_SET(param) \
+    virtual void set_##param(string & s) \
+    { \
+        if(ifsGwMib)  ifsGwMib->set_##param(s); \
+    };
+
+#define AGENT_GATEWAY_STATS_GET(param) \
+    virtual string& get_##param() \
+    { \
+        if(ifsGwMib)  ifsGwMib->get_##param(); \
+    };
+    
+class IfsAgent {
+public:
+    IfsAgent():
+    deviceTypeBeingMonitored(0),
+    ifsMixerMib(NULL),
+    ifsTurretMib(NULL),
+    ifsGwMib(NULL) {};
+    ~IfsAgent() {};
+    
+    virtual bool initialise(int );
+    virtual void mainloop_nonblocking();
+    virtual void shutdown();
+    
+        /* Common Stats */
+    AGENT_COMMON_STATS_SET(host_name);
+    AGENT_COMMON_STATS_SET(atp_port);
+    AGENT_COMMON_STATS_SET(org);
+    AGENT_COMMON_STATS_SET(site);
+    AGENT_COMMON_STATS_SET(CN);
+    AGENT_COMMON_STATS_SET(DN);
+    AGENT_COMMON_STATS_SET(load_factor);
+
+    AGENT_COMMON_STATS_GET(host_name);
+    AGENT_COMMON_STATS_GET(atp_port);
+    AGENT_COMMON_STATS_GET(org);
+    AGENT_COMMON_STATS_GET(site);
+    AGENT_COMMON_STATS_GET(CN);
+    AGENT_COMMON_STATS_GET(DN);
+    AGENT_COMMON_STATS_GET(load_factor);
+
+    /* Mixer Stats */
+    AGENT_MIXER_STATS_SET(num_mixes);
+    AGENT_MIXER_STATS_SET(max_mixes);
+
+    AGENT_MIXER_STATS_GET(num_mixes);
+    AGENT_MIXER_STATS_GET(max_mixes);
+
+    /* Turret Stats */
+    AGENT_TURRET_STATS_SET(heartbeat_timer);
+    AGENT_TURRET_STATS_SET(total_calls);
+    AGENT_TURRET_STATS_SET(total_lhs_calls);
+    AGENT_TURRET_STATS_SET(total_rhs_calls);
+    AGENT_TURRET_STATS_SET(total_incoming_calls);
+    AGENT_TURRET_STATS_SET(total_lhs_incoming_calls);
+    AGENT_TURRET_STATS_SET(total_rhs_incoming_calls);
+    AGENT_TURRET_STATS_SET(total_outgoing_calls);
+    AGENT_TURRET_STATS_SET(total_lhs_outgoing_calls);
+    AGENT_TURRET_STATS_SET(total_rhs_outgoing_calls);
+    AGENT_TURRET_STATS_SET(lhs_interface_up);
+    AGENT_TURRET_STATS_SET(rhs_interface_up);
+
+    AGENT_TURRET_STATS_GET(heartbeat_timer);
+    AGENT_TURRET_STATS_GET(total_calls);
+    AGENT_TURRET_STATS_GET(total_lhs_calls);
+    AGENT_TURRET_STATS_GET(total_rhs_calls);
+    AGENT_TURRET_STATS_GET(total_incoming_calls);
+    AGENT_TURRET_STATS_GET(total_lhs_incoming_calls);
+    AGENT_TURRET_STATS_GET(total_rhs_incoming_calls);
+    AGENT_TURRET_STATS_GET(total_outgoing_calls);
+    AGENT_TURRET_STATS_GET(total_lhs_outgoing_calls);
+    AGENT_TURRET_STATS_GET(total_rhs_outgoing_calls);
+    AGENT_TURRET_STATS_GET(lhs_interface_up);
+    AGENT_TURRET_STATS_GET(rhs_interface_up);
+
+    /* Gateway Stats */
+    AGENT_GATEWAY_STATS_SET(total_gw_calls);
+    AGENT_GATEWAY_STATS_SET(max_gw_calls);
+    AGENT_GATEWAY_STATS_SET(rejected_gw_calls);
+    AGENT_GATEWAY_STATS_SET(dropped_gw_calls);
+    AGENT_GATEWAY_STATS_SET(parked_audio_device);
+
+    AGENT_GATEWAY_STATS_GET(total_gw_calls);
+    AGENT_GATEWAY_STATS_GET(max_gw_calls);
+    AGENT_GATEWAY_STATS_GET(rejected_gw_calls);
+    AGENT_GATEWAY_STATS_GET(dropped_gw_calls);
+    AGENT_GATEWAY_STATS_GET(parked_audio_device);
+private:
+    int deviceTypeBeingMonitored;
+    IfsMib <MixerStats>  *ifsMixerMib;
+    IfsMib <TurretStats> *ifsTurretMib;
+    IfsMib <GatewayStats> *ifsGwMib;
+};
+
+#endif // _IFS_AGENT_HPP_

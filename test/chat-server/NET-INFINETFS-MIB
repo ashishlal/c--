@@ -1,0 +1,255 @@
+--  Filename: NET-INFINETFS-MIB.txt
+--  Description: MIB.txt for Infinetfs Net-Snmp Module
+--  Author: Mandar Joshi <mandar.joshi@infinetfs.com>
+--  Company: Infinet Financial Systems Ltd.
+--  Created: 2011-12-30
+--  Version: 1.0
+--  Interpreter: N.A.
+-- 
+--  Copyright 2011 by Infinet Financial Systems Ltd. All Rights Reserved.
+
+NET-INFINETFS-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Integer32,
+    NOTIFICATION-TYPE, enterprises          FROM SNMPv2-SMI
+    SnmpAdminString                         FROM SNMP-FRAMEWORK-MIB
+    netSnmp                                 FROM NET-SNMP-MIB
+    RowStatus, StorageType                  FROM SNMPv2-TC
+    InetAddressType, InetAddress            FROM INET-ADDRESS-MIB
+;
+
+Infinetfs MODULE-IDENTITY
+    LAST-UPDATED "201112300000Z"
+    ORGANIZATION "www.infinetfs.com"
+    CONTACT-INFO    
+	 "postal:   Tokyo"
+    DESCRIPTION
+	"Infinetfs MIB objects for Net-Snmp"
+    REVISION     "201112300000Z"    
+    DESCRIPTION
+	"Infinetfs MIB Module"
+    ::= { enterprises 39282 }
+
+infinetfsStatsTable         OBJECT IDENTIFIER ::= { Infinetfs 1 }
+infinetfsMixerStatsTable    OBJECT IDENTIFIER ::= { Infinetfs 2 }
+infinetfsTurretStatsTable   OBJECT IDENTIFIER ::= { Infinetfs 3 }
+infinetfsGatewayStatsTable  OBJECT IDENTIFIER ::= { Infinetfs 4 }
+
+-- For Stats
+
+statsHostName OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-create
+    STATUS      current
+    DESCRIPTION
+            "host name"
+    ::= { infinetfsStatsTable 1 }
+
+statsAtpPort OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "atp port"
+    ::= { infinetfsStatsTable 2 }
+
+statsOrg OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Organization"
+    ::= { infinetfsStatsTable 3 }
+
+statsSite OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Site (eg. Lab1)"
+    ::= { infinetfsStatsTable 4 }
+
+statsCN OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "common name"
+    ::= { infinetfsStatsTable 5 }
+
+statsDN OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "distinguished name"
+    ::= { infinetfsStatsTable 6 }
+
+statsLoadFactor OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "load factor"
+    ::= { infinetfsStatsTable 6 }
+ 
+-- For MixerStats
+
+mixerStatsNumMixes OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-create
+    STATUS      current
+    DESCRIPTION
+            "number of mixes"
+    ::= { infinetfsMixerStatsTable 1 }
+
+mixerStatsMaxMixes OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "max number of mixes"
+    ::= { infinetfsMixerStatsTable 2 }
+
+-- For TurretStats
+
+turretStatsHeartbeatTimer OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Heartbeat Timer"
+    ::= { infinetfsTurretStatsTable 1 }
+
+turrestStatsTotalCalls OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Total Calls"
+    ::= { infinetfsTurretStatsTable 2 }
+
+turretStatsTotalLHSCalls OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "total LHS Calls"
+    ::= { infinetfsTurretStatsTable 3 }
+
+turretStatsTotalRHSCalls OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "total RHS Calls"
+    ::= { infinetfsTurretStatsTable 4 }
+
+turretStatsTotalIncomingCalls OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "total incoming calls"
+    ::= { infinetfsTurretStatsTable 5 }
+
+turretStatsTotalLHSIncomingCalls OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "lhs incoming calls"
+    ::= { infinetfsTurretStatsTable 6 }
+
+turretStatsTotalRHSIncomingCalls OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "rhs incoming calls"
+    ::= { infinetfsTurretStatsTable 7 }
+
+turretStatsTotalOutgoingCalls OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "total outgoing calls"
+    ::= { infinetfsTurretStatsTable 8 }
+
+turretStatsTotalLHSOutgoingCalls OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "LHS Outgoing Calls"
+    ::= { infinetfsTurretStatsTable 9 }
+
+turretStatsTotalRHSOutgoingCalls OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "RHS Outgoing Calls"
+    ::= { infinetfsTurretStatsTable 10 }
+
+turretStatsLHSInterfaceUp OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "LHS Interface Up"
+    ::= { infinetfsTurretStatsTable 11 }
+
+turretStatsRHSInterfaceUp OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "RHS Interface Up"
+    ::= { infinetfsTurretStatsTable 12 }
+
+-- For GatewayStats
+
+gwStatsTotalCalls OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Gateway Total Calls"
+    ::= { infinetfsGatewayStatsTable 1 }
+
+gwStatsMaxCalls OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Gateway Max Calls"
+    ::= { infinetfsGatewayStatsTable 2 }
+
+gwStatsRejectedCalls OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Gateway Rejected Calls"
+    ::= { infinetfsGatewayStatsTable 3 }
+
+gwStatsDroppedCalls OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Gateway Dropped Calls"
+    ::= { infinetfsGatewayStatsTable 4 }
+
+gwStatsParkedDevice OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Gateway Parked Device"
+    ::= { infinetfsGatewayStatsTable 5 }
+
+END

@@ -1,0 +1,1 @@
+g++ --std=c++0x IfsAgent.cpp chat_server.cpp -L /home/ashish/co/atp-dev/release/lib -Wl,-Bstatic -lnetsnmpmibs -lnetsnmpagent -lnetsnmp -Wl,-Bdynamic -I /home/ashish/co/atp-dev/release/include -lcrypto -Wl,-Bstatic -L /home/ashish/co/boost-atp/release/lib -lboost_system -Wl,-Bdynamic -o chat_server

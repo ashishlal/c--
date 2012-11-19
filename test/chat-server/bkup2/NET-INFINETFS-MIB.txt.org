@@ -1,0 +1,212 @@
+--  Filename: NET-INFINETFS-MIB.txt
+--  Description: MIB.txt for Infinetfs Net-Snmp Module
+--  Author: Mandar Joshi <mandar.joshi@infinetfs.com>
+--  Company: Infinet Financial Systems Ltd.
+--  Created: 2011-12-30
+--  Version: 1.0
+--  Interpreter: N.A.
+-- 
+--  Copyright 2011 by Infinet Financial Systems Ltd. All Rights Reserved.
+
+NET-INFINETFS-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Integer32,
+    NOTIFICATION-TYPE, enterprises          FROM SNMPv2-SMI
+    SnmpAdminString                         FROM SNMP-FRAMEWORK-MIB
+    netSnmp                                 FROM NET-SNMP-MIB
+    RowStatus, StorageType                  FROM SNMPv2-TC
+    InetAddressType, InetAddress            FROM INET-ADDRESS-MIB
+;
+
+Infinetfs MODULE-IDENTITY
+    LAST-UPDATED "201112300000Z"
+    ORGANIZATION "www.infinetfs.com"
+    CONTACT-INFO    
+	 "postal:   Tokyo"
+    DESCRIPTION
+	"Infinetfs MIB objects for Net-Snmp"
+    REVISION     "201112300000Z"    
+    DESCRIPTION
+	"Infinetfs MIB Module"
+    ::= { enterprises 39282 }
+
+infinetfsRouteTables        OBJECT IDENTIFIER ::= { Infinetfs 1 }
+infinetfsFullRouteTables    OBJECT IDENTIFIER ::= { Infinetfs 2 }
+infinetfsMixers		    OBJECT IDENTIFIER ::= { Infinetfs 3 }
+
+-- For Mixers
+
+mixerCapacityComputeUsage OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "cpu usage on the mixer hardware"
+    ::= { infinetfsMixers 1 }
+
+mixerCapacityComputeQueueLength OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "cpu queue length on the mixer hardware"
+    ::= { infinetfsMixers 2 }
+
+mixerCapacityTotalMemory OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "total memory (RAM) on the mixer hardware"
+    ::= { infinetfsMixers 3 }
+
+mixerCapacityMemoryUsage OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "memory usage on the mixer hardware"
+    ::= { infinetfsMixers 4 }
+
+mixerCapacityTotalMixers OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "total number of logical mixers available"
+    ::= { infinetfsMixers 5 }
+
+mixerCapacityAvailableMixers OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "number of free logical mixers available"
+    ::= { infinetfsMixers 6 }
+
+-- For receiving dialstring
+
+infinetfsRouteTable OBJECT-TYPE
+    SYNTAX      SEQUENCE OF InfinetfsRouteEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+	"Table for routes"
+    ::= { infinetfsRouteTables 1 }
+
+infinetfsRouteEntry OBJECT-TYPE
+    SYNTAX      InfinetfsRouteEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+	"A row describing a route"
+    INDEX   { infinetfsRouteName }
+    ::= {infinetfsRouteTable 1 }
+
+InfinetfsRouteEntry ::= SEQUENCE {
+	infinetfsRouteName	OCTET STRING,
+	infinetfsRouteDesc	OCTET STRING
+}
+
+infinetfsRouteName OBJECT-TYPE
+    SYNTAX      OCTET STRING (SIZE(1..20))
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+	"Route name"
+    ::= { infinetfsRouteEntry 1 }
+
+infinetfsRouteDesc OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-create
+    STATUS      current
+    DESCRIPTION
+	"Route description"
+    ::= { infinetfsRouteEntry 2 }
+
+
+
+
+
+
+-- For Bulk Get
+
+
+
+
+infinetfsFullRouteTable OBJECT-TYPE
+    SYNTAX      SEQUENCE OF InfinetfsFullRouteEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+	"Table for routes"
+    ::= { infinetfsFullRouteTables 1 }
+
+infinetfsFullRouteEntry OBJECT-TYPE
+    SYNTAX      InfinetfsFullRouteEntry
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+	"A row describing a route"
+    INDEX   { infinetfsFullRouteIndex }
+    ::= {infinetfsFullRouteTable 1 }
+
+InfinetfsFullRouteEntry ::= SEQUENCE {
+	infinetfsFullRouteIndex INTEGER
+	infinetfsFullRouteName	OCTET STRING,
+	infinetfsLCC	INTEGER,
+	infinetfsCLCC	INTEGER,
+	infinetfsHGC	INTEGER,
+	infinetfsGHGC	INTEGER,
+}
+
+infinetfsFullRouteIndex OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-create
+    STATUS      current
+    DESCRIPTION
+	"Route description"
+    ::= { infinetfsFullRouteEntry 1 }
+
+infinetfsFullRouteName OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  not-accessible
+    STATUS      current
+    DESCRIPTION
+	"Route name"
+    ::= { infinetfsFullRouteEntry 2 }
+
+infinetfsLCC OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-create
+    STATUS      current
+    DESCRIPTION
+	"Route description"
+    ::= { infinetfsFullRouteEntry 3 }
+
+infinetfsCLCC OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-create
+    STATUS      current
+    DESCRIPTION
+	"Route description"
+    ::= { infinetfsFullRouteEntry 4 }
+
+infinetfsHGC OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-create
+    STATUS      current
+    DESCRIPTION
+	"Route description"
+    ::= { infinetfsFullRouteEntry 5 }
+
+infinetfsGHGC OBJECT-TYPE
+    SYNTAX      INTEGER
+    MAX-ACCESS  read-create
+    STATUS      current
+    DESCRIPTION
+	"Route description"
+    ::= { infinetfsFullRouteEntry 6 }
+
+END

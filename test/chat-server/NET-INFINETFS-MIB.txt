@@ -1,0 +1,282 @@
+--  Filename: NET-INFINETFS-MIB.txt
+--  Description: MIB.txt for Infinetfs Net-Snmp Module
+--  Author: Mandar Joshi <mandar.joshi@infinetfs.com>
+--  Company: Infinet Financial Systems Ltd.
+--  Created: 2011-12-30
+--  Version: 1.0
+--  Interpreter: N.A.
+-- 
+--  Copyright 2011 by Infinet Financial Systems Ltd. All Rights Reserved.
+
+NET-INFINETFS-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+    MODULE-IDENTITY, OBJECT-TYPE, Integer32, Counter32, Unsigned32,
+    Gauge32, Counter64, IpAddress, mib-2,
+    NOTIFICATION-TYPE, enterprises          FROM SNMPv2-SMI
+    SnmpAdminString                         FROM SNMP-FRAMEWORK-MIB
+    netSnmp                                 FROM NET-SNMP-MIB
+    RowStatus, StorageType                  FROM SNMPv2-TC
+    InetAddressType, InetAddress            FROM INET-ADDRESS-MIB
+;
+
+Infinetfs MODULE-IDENTITY
+    LAST-UPDATED "201112300000Z"
+    ORGANIZATION "www.infinetfs.com"
+    CONTACT-INFO    
+	 "postal:   Tokyo"
+    DESCRIPTION
+	"Infinetfs MIB objects for Net-Snmp"
+    REVISION     "201112300000Z"    
+    DESCRIPTION
+	"Infinetfs MIB Module"
+    ::= { enterprises 39282 }
+
+SNMP                        OBJECT IDENTIFIER ::= { Infinetfs 3 }
+MIBv1                       OBJECT IDENTIFIER ::= { SNMP 0 }
+MIBv2                       OBJECT IDENTIFIER ::= { SNMP 1 }
+infinetfsStatsTable         OBJECT IDENTIFIER ::= { MIBv1 1 }
+infinetfsMixerStatsTable    OBJECT IDENTIFIER ::= { MIBv1 2 }
+infinetfsTurretStatsTable   OBJECT IDENTIFIER ::= { MIBv1 3 }
+infinetfsGatewayStatsTable  OBJECT IDENTIFIER ::= { MIBv1 4 }
+infinetfsTraps              OBJECT IDENTIFIER ::= { MIBv1 5 }
+infinetfsFatalError         OBJECT IDENTIFIER ::= { infinetfsTraps 0 }
+infinetfsError              OBJECT IDENTIFIER ::= { infinetfsTraps 1 }
+
+AtpCommonStatsTable OBJECT-TYPE
+    SYNTAX SEQUENCE OF AtpCommonStats
+    ACCESS not-accessible
+    STATUS mandatory
+    DESCRIPTION
+        "A list of ATP Common Stats entries. The number of entries is given
+         by value of atpNumber."
+    ::= { MIBv2 1 }
+
+atpCommonStats OBJECT-TYPE
+    SYNTAX AtpCommonStats
+    ACCESS not-accessible
+    STATUS mandatory
+    DESCRIPTION
+        "ATP Common Stat entry containing atp common stat objects"
+   INDEX { atpIndex }
+   ::= { atpCommonStatsTable 1 }
+
+AtpCommonStats ::=
+    SEQUENCE {
+        atpIndex
+            INTEGER,
+        atpHostName
+            OCTET STRING
+    }
+
+atpIndex OBJECT-TYPE
+    SYNTAX INTEGER
+    ACCESS read-only
+    STATUS mandatory
+    DESCRIPTION
+        "A unique value for each ATP stat"
+   ::= { atpCommonStats 1 }
+
+atpHostName OBJECT-TYPE
+    SYNTAX OCTET STRING
+    ACCESS read-only
+    STATUS mandatory
+    DESCRIPTION
+        "ATP Host Name"
+   ::= { atpCommonStats 2 }
+
+ATP-TRAP-FATAL NOTIFICATION-TYPE
+        STATUS current
+        OBJECTS { infinetfsTraps }
+        DESCRIPTION "ATP Fatal Error"
+        ::= { infinetfsFatalError }
+
+ATP-TRAP-ERROR NOTIFICATION-TYPE
+        STATUS current
+        OBJECTS { infinetfsTraps }
+        DESCRIPTION "ATP Error"
+        ::= { infinetfsError }
+
+-- For Stats
+
+statsHostName OBJECT-TYPE
+    SYNTAX      OCTET STRING
+    MAX-ACCESS  read-create
+    STATUS      current
+    DESCRIPTION
+            "host name"
+    ::= { infinetfsStatsTable 1 }
+
+statsAtpPort OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "atp port"
+    ::= { infinetfsStatsTable 2 }
+
+statsOrg OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Organization"
+    ::= { infinetfsStatsTable 3 }
+
+statsSite OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Site (eg. Lab1)"
+    ::= { infinetfsStatsTable 4 }
+
+statsCN OBJECT-TYPE
+    SYNTAX      OCTET-STRING
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "common name"
+    ::= { infinetfsStatsTable 5 }
+
+-- For MixerStats
+
+mixerStatsNumMixes OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "number of mixes"
+    ::= { infinetfsMixerStatsTable 1 }
+
+mixerStatsMaxMixes OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "max number of mixes"
+    ::= { infinetfsMixerStatsTable 2 }
+
+-- For TurretStats
+
+turretStatsTotalCalls OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Total Turret Calls"
+    ::= { infinetfsTurretStatsTable 1 }
+
+turretStatsTotalRejectedCalls OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Total Turret Rejected Calls"
+    ::= { infinetfsTurretStatsTable 2 }
+
+turretStatsTotalDroppedCalls OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Total Turret Dropped Calls"
+    ::= { infinetfsTurretStatsTable 3 }
+
+turretStatsCurrentCalls OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Total Turret Current Calls"
+    ::= { infinetfsTurretStatsTable 4 }
+
+turretStatsAverageCallDuration OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Turret Average Call Duration"
+    ::= { infinetfsTurretStatsTable 5 }
+
+turretStatsLongestCallDuration OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Turret Longest Call Duration"
+    ::= { infinetfsTurretStatsTable 6 }
+
+-- For GatewayStats
+
+gwStatsTotalCalls OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Gateway Total Calls"
+    ::= { infinetfsGatewayStatsTable 1 }
+gwStatsCurrentCalls OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Gateway Current Calls"
+    ::= { infinetfsGatewayStatsTable 2 }
+
+gwStatsMaxCalls OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Gateway Max Supported Calls"
+    ::= { infinetfsGatewayStatsTable 3 }
+
+gwStatsTotalIncomingCalls OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "total incoming calls"
+    ::= { infinetfsGatewayStatsTable 4 }
+
+gwStatsTotalOutgoingCalls OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "total outgoing calls"
+    ::= { infinetfsGatewayStatsTable 5 }
+
+gwStatsRejectedCalls OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Gateway Rejected Calls"
+    ::= { infinetfsGatewayStatsTable 6 }
+
+gwStatsDroppedCalls OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Gateway Dropped Calls"
+    ::= { infinetfsGatewayStatsTable 7 }
+
+gwAverageCallDuration OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Gateway Average Call Duration"
+    ::= { infinetfsGatewayStatsTable 8 }
+
+gwLongestCallDuration OBJECT-TYPE
+    SYNTAX      Counter32
+    MAX-ACCESS  read-only
+    STATUS      current
+    DESCRIPTION
+            "Gateway Longest Call Duration"
+    ::= { infinetfsGatewayStatsTable 9 }
+END

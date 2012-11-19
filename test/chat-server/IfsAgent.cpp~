@@ -1,0 +1,74 @@
+#include <net-snmp/net-snmp-config.h>
+#include <net-snmp/net-snmp-includes.h>
+#include <net-snmp/agent/net-snmp-agent-includes.h>
+#include "IfsAgent.hpp"
+
+#include <signal.h>
+#include <iostream>
+
+
+/* int main (int argc, char **argv) */
+bool IfsAgent::initialise(int dev)
+{
+    int agentx_subagent=1; /* change this if you want to be a SNMP master agent */
+    int background = 0; /* change this if you want to run in the background */
+    int syslog = 0; /* change this if you want to use syslog */
+
+    std::cout << ".......1........." << std::endl;
+    deviceTypeBeingMonitored = dev;
+  
+#if 0
+    /* print log errors to syslog or stderr */
+    if (syslog)
+      snmp_enable_calllog();
+    else
+      snmp_enable_stderrlog();
+#endif
+
+    /* make us a agentx client. */
+    netsnmp_ds_set_boolean(NETSNMP_DS_APPLICATION_ID, NETSNMP_DS_AGENT_ROLE, 1);
+
+    /* initialize tcpip, if necessary */
+    SOCK_STARTUP;
+
+    /* initialize the agent library */
+    init_agent("IfsAgent");
+
+    /* initialize mib code here */
+    if(dev == ATP_DEV_MIXER) {
+        ifsMixerMib = IfsMib<MixerStats>::getInstance();
+    }
+    else if(dev == ATP_DEV_TURRET) {
+        ifsTurretMib = IfsMib<TurretStats>::getInstance();
+    }
+    else if(dev == ATP_DEV_GATEWAY) {
+        ifsGwMib = IfsMib<GatewayStats>::getInstance();
+    }
+
+    init_snmp("IfsAgent");
+
+ 
+    /* In case we recevie a request to stop (kill -TERM or kill -INT) */
+    // keep_running = 1;
+    //signal(SIGTERM, stop_server);
+    //signal(SIGINT, stop_server);
+
+    //snmp_log(LOG_INFO,"infinetfs_agent is up and running.\n");
+    return true;
+}
+
+void IfsAgent::mainloop_nonblocking()
+{
+    agent_check_and_process(0); /* 0 == don't block ; 1 == block */
+    return;
+}
+
+void IfsAgent::shutdown()
+{
+  /* at shutdown time */
+  snmp_shutdown("IfsAgent");
+  SOCK_CLEANUP;
+  return;
+}
+
+
